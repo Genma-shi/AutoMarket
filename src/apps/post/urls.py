@@ -1,9 +1,6 @@
-from django.urls import path
-
-from src.apps.post import views
+from src.apps.cars.urls import * 
 
 
-from django.contrib import admin
-from django.urls import path , include
-
-urlpatterns = []
+urlpatterns.append(
+    path('', TemplateView.as_view(template_name='base.html'), name='empty-path'),
+)

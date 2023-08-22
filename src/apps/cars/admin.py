@@ -1,11 +1,27 @@
 from django.contrib import admin
+from .models import CarMake, CarModel, Car, CarPhoto
 
-# Register your models here.
-from .models import Car
-admin.site.register(Car)
 
-from .models import Country
-admin.site.register(Country)
+@admin.register(CarMake)
+class CarMakeAdmin(admin.ModelAdmin):
+    list_display = ('name',)
 
-from .models import CarPhoto
-admin.site.register(CarPhoto)
+@admin.register(CarModel)
+class CarModelAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+
+class CarPhotoInline(admin.TabularInline):
+    model = CarPhoto
+    extra = 1
+
+@admin.register(Car)
+class CarAdmin(admin.ModelAdmin):
+    list_display = ('mark', 'model', 'year', 'owner')
+    list_filter = ('mark', 'model', 'year', 'owner')
+    search_fields = ('mark__name', 'model__name', 'year', 'owner__username')
+    inlines = [CarPhotoInline]
+
+@admin.register(CarPhoto)
+class CarPhotoAdmin(admin.ModelAdmin):
+    list_display = ('car', 'image', 'is_main')
+    list_filter = ('car', 'is_main')
