@@ -1,0 +1,110 @@
+{% extends 'base.html' %} 
+{% load static %}
+{% block content %}
+
+<div class="page-wrapper">
+    <!-- Page header -->
+    <div class="page-header d-print-none">
+      <div class="container-xl">
+        <div class="row g-2 align-items-center">
+          <div class="col">
+            <h2 class="page-title">
+              Машины
+            </h2>
+            <div class="text-muted mt-1">тут могла бы быть ваша назойливая реклама</div>
+          </div>
+          <!-- Page title actions -->
+          <div class="col-auto ms-auto d-print-none">
+            <div class="d-flex">
+              <div class="me-3">
+                <div class="input-icon">
+                  <input type="text" value="" class="form-control" placeholder="Search…">
+                  <span class="input-icon-addon">
+                    <!-- Download SVG icon from http://tabler-icons.io/i/search -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg>
+                  </span>
+                </div>
+              </div>
+              <!-- <a href="#" class="btn btn-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+                Add event
+              </a> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Page body -->
+    <div class="row row-cards">
+      {% for car in cars %}
+          <div class="col-sm-6 col-lg-4">
+              <div class="card card-sm">
+                  <a href="{% url 'detail_page' car.id %}" class="d-block">
+                    {% if car.photos.first %}
+                      <img src="{{ car.photos.first.image.url }}" class="card-img-top" width="340px" height="290px">
+                    {% else %}
+                      <img src="{% static '\dist\default_auto_logo.jpg' %}" class="card-img-top" width="340px" height="290px">
+                    {% endif %}
+                  </a>
+                  <div class="card-body">
+                     
+                      <div class="d-flex align-items-center">
+                          <div>
+                              <div>{{ car.mark.name }} {{ car.model.name }} ({{ car.year }})</div> <div> {{car.}} </div>
+                              <div class="text-muted">{{ car.owner.username }}</div>
+
+                          </div>
+                          <div class="align-right">
+                          <a href="{% url 'add_to_favorites' pk=car.pk  %}" >
+                            {% if car in request.user.favorites_list.all %}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-heart-minus" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                              <path d="M19.5 12.572l-2.494 2.47m-5.006 4.958l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572"></path>
+                              <path d="M16 19h6"></path>
+                           </svg>
+                            {% else %}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-heart-plus" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                              <path d="M12 20l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.96 6.053"></path>
+                              <path d="M16 19h6"></path>
+                              <path d="M19 16v6"></path>
+                           </svg>
+                          {% endif %} 
+                          </a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        {% endfor %}
+    </div>
+    <div class="d-flex">
+      <ul class="pagination ms-auto">
+        <li class="page-item disabled">
+          <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+            <!-- Download SVG icon from http://tabler-icons.io/i/chevron-left -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg>
+            prev
+          </a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item active"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">4</a></li>
+        <li class="page-item"><a class="page-link" href="#">5</a></li>
+        <li class="page-item">
+          <a class="page-link" href="#">
+            next <!-- Download SVG icon from http://tabler-icons.io/i/chevron-right -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l6 6l-6 6" /></svg>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<style>
+  .align-right {
+            text-align: right;}
+</style>
+
+{% endblock %}

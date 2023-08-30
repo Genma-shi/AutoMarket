@@ -1,0 +1,39 @@
+{% extends 'base.html' %} 
+{% load static %}
+
+{% block content %}
+<div class="row row-cards">
+  {% for car in favorites %}
+      <div class="col-sm-6 col-lg-4">
+          <div class="card card-sm">
+              <a href="{% url 'detail_page' car.id %}" class="d-block">
+                {% if car.photos.first %}
+                  <img src="{{ car.photos.first.image.url }}" class="card-img-top" width="340px" height="290px">
+                {% else %}
+                  <img src="{% static '\dist\default_auto_logo.jpg' %}" class="card-img-top" width="340px" height="290px">
+                {% endif %}
+              </a>
+              <div class="card-body">
+                 
+                  <div class="d-flex align-items-center">
+                      <div>
+                          <div>{{ car.mark.name }} {{ car.model.name }} ({{ car.year }})</div> <div> {{car.}} </div>
+                          <div class="text-muted">{{ car.owner.username }}</div>
+
+                      </div>
+                      <div class="align-right">
+                      <a href="{% url 'remove_to_favorites' pk=car.pk  %}" >
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-heart-minus" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                          <path d="M19.5 12.572l-2.494 2.47m-5.006 4.958l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572"></path>
+                          <path d="M16 19h6"></path>
+                       </svg>
+                       </a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+    {% endfor %}
+</div>
+{% endblock %}

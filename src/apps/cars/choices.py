@@ -1,8 +1,8 @@
 from django.db import models
 
 class RuleType(models.TextChoices):
-    RIGHT = "right", "Правый"
-    LEFT = "left", "Левый"
+    RIGHT = "right", "правый"
+    LEFT = "left", "левый"
 
 
 class DriveType(models.TextChoices):
@@ -12,8 +12,8 @@ class DriveType(models.TextChoices):
 
 
 class GearboxType(models.TextChoices):
-    tiptronic = ('tiptronic' , 'типтроник')
     machine = ('machine' , 'автомат')
+    tiptronic = ('tiptronic' , 'типтроник')
     mechanics = ('mechanics' , 'механика')
     variable_speed = ('variable speed' , 'вариатор')
     rotbot = ('robot' , 'робот')
@@ -33,8 +33,8 @@ class BodyType(models.TextChoices):
         return self.name
 
 class Customs_cleared(models.TextChoices):
-    cleared_by_customs = True #('cleared by customs' , 'расстаможен')
-    not_cleared = False #('not cleared' , 'не расстаможен')
+    cleared_by_customs = ('cleared by customs' , 'расстаможен')
+    not_cleared = ('not cleared' , 'не расстаможен')
 
 class ConditionType(models.TextChoices):
     excellent = ('excellent' , 'отличное')
@@ -45,6 +45,7 @@ class ConditionType(models.TextChoices):
     emergency = ('emergency' , 'аварийное')
 
 class Color(models.TextChoices):
+    white = ('white' , 'белый')
     red = ('red', 'красный')
     blue = ('blue', 'синий')
     black = ('black', 'черный')
@@ -61,19 +62,20 @@ class Color(models.TextChoices):
     burgundy = ('burgundy', 'бордовый')
 
 class VINcode(models.TextChoices):
-    yes = True
-    no = False
-
-class Special_notes(models.TextChoices):
-    body_kit = ('body kit' , 'обвес')
-    gas_equipment = ('gas equipment' , 'газовое оборудование')
-    whole_car_tint = ('whole car tint' , 'тонировка')
-    spoiler = ('spoiler' , 'спойлер')
-    luke = ('luke' , 'люк')
+    yes = ('yes' , 'есть VIN-код')
+    no = ('no' , 'нет VIN-код')
 
 class Engine(models.TextChoices):
     petrol = ('petrol' , 'бензин')
-    diesel = ('diesel' , 'дизель')
-    gas = ('gas' , 'газ')
+    diesel = ('diesel' , 'дизель')  
     hybrid = ('hybrid' , 'гибрид')
     electric_fuel = ('electric fuel' , 'электро')
+
+
+class Currency(models.TextChoices):
+    USD = ('USD' , 'В долларах')
+    KGZ = ('KGZ' , 'В сомах')
+
+class Number(models.TextChoices):
+    hide = ('hide' , 'скрыть номер телефона')
+    show = ('show' , 'показать номер телефона')

@@ -1,0 +1,66 @@
+{% extends 'base.html' %} 
+{% load static %}
+{% block content %}
+<div class="col d-flex flex-column">
+    <div class="card-body">
+        <h2 class="mb-4"></h2>
+        <div class="row align-items-center">
+            <div class="col-auto">
+            <a href="#">
+                {% if car.photos.first %}
+                    {% for photo in car_photos %}
+                    <img src="{{ photo.image.url }}"  width="340px" height="290px">
+                    {% endfor %}
+                      {% else %}
+                      <img src="{% static '\dist\default_auto_logo.jpg' %}" class="card-img-top" width="340px" height="290px">
+                    {% endif %}
+            </a>
+            </div>
+            <!-- Уберите кнопки Change avatar и Delete avatar, так как они не относятся к машинам -->
+        </div>
+        <h3 class="card-title">{{ car.mark.name }} {{ car.model.name }} ({{ car.year }})</h3>
+        <h3 class="card-title mt-4"></h3>
+        <div class="row g-3">
+            <div class="col-md">
+                <div class="form-label">Год : {{ car.year }}</div>
+                <div class="form-label">Описание : {{ car.description }}</div>
+                <div class="form-label">Цена : {{ car.price }} {{ car.get_currency_display }} </div>
+                <div class="form-label">Состояние : {{ car.get_condition_display }}</div>
+                <div class="form-label">Расстаможен : {{ car.get_customs_cleared_display }}</div>
+                
+                <div class="form-label">Тип кузова : {{ car.get_body_type_display }}</div>
+                <div class="form-label">Привод : {{ car.get_drive_display }}</div>
+                <div class="form-label">Коробка передач : {{ car.get_gearbox_display }}</div>
+                <div class="form-label">Объем двигателя : {{ car.engine_capacity }} л</div>
+                <div class="form-label">Тип руля : {{ car.get_ruletype_display }}</div>
+                <div class="form-label">Цвет автомобиля : {{ car.get_color_display }}</div>
+                
+                
+                <div class="form-label">VIN код : {{ car.get_vin_code_display }}</div>
+                <div class="form-label">Особенные приметы :</div>
+                <ul>
+                    {% for note in car.special_notes.all %}
+                        <li>{{ note }}</li>
+                    {% endfor %}
+                </ul>
+
+   
+                <div class="form-label">Двигатель :</div>
+                <div class="form-label">Топливо : {{ car.get_engine_display }} </div>
+                <p class="form-control-static">{{ car.get_engine_display }}</p>
+            </div>
+        </div>
+        
+        
+    </div>
+    <div class="card-footer bg-transparent mt-auto">
+        <div class="btn-list justify-content-end">
+            <a href="#" class="btn">
+                Back
+            </a>
+            <!-- Добавьте другие кнопки или действия, если необходимо -->
+        </div>
+    </div>
+</div>
+
+{% endblock %}

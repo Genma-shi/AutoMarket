@@ -1,9 +1,11 @@
-{% extends 'base.html' %} <!-- Загрузка пользовательской теговой библиотеки -->
+{% extends 'base.html' %} 
 {% load static %}
 {% block content %} 
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Add Car</button>
+    {{ special_notes_form.as_p }}
+    <button type="submit" class="btn btn-primary">Опубликовать машину</button>
 </form>
 {% endblock %}
+
