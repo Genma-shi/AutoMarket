@@ -9,9 +9,7 @@
         </div>
         <div class="col">
           <h1 class="fw-bold">{{ user.email }}</h1>
-          
-
-          <div class="my-2">{{ user.mobile }}</div>
+          <div class="my-2">{{ user. }}</div>
           <div class="list-inline list-inline-dots text-muted"> </div>
         </div>
         <div class="col-auto ms-auto">
@@ -34,6 +32,11 @@
       </div>
     </div>
   </div>
+  {% if profile_user.username == request.user.username %}
+  Это владелец страницы
+  {% else %}
+  Это не владелец страницы
+  {% endif %}
     <h1>User Cars</h1>
     <div class="row row-cards">
         {% for car in cars %}

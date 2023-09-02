@@ -29,8 +29,6 @@ class BodyType(models.TextChoices):
     minivan = ('minivan' , 'минивен')
     truck = ('truck' , 'грузовик')
 
-    def __str__(self):
-        return self.name
 
 class Customs_cleared(models.TextChoices):
     cleared_by_customs = ('cleared by customs' , 'расстаможен')

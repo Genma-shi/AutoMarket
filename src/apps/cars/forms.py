@@ -2,8 +2,9 @@ from django import forms
 from .models import *
 from django.forms.models import inlineformset_factory
 
+from datetime import datetime
 from django import forms
-
+now_year = datetime.now().year
 
 class MultipleFileInput(forms.ClearableFileInput):
     allow_multiple_selected = True
@@ -11,7 +12,7 @@ class MultipleFileInput(forms.ClearableFileInput):
 
 class MultipleFileField(forms.FileField):
     def __init__(self, *args, **kwargs):
-        kwargs.setdefault("widget", MultipleFileInput())
+        kwargs.setdefault("widget", MultipleFileInput)
         super().__init__(*args, **kwargs)
 
     def clean(self, data, initial=None):
@@ -30,7 +31,8 @@ class CarForm(forms.ModelForm):
     currency = forms.ChoiceField(choices=Currency.choices, label='Валюта')
     price = forms.DecimalField(max_digits=10, decimal_places=2, label='Цена')  
     description = forms.CharField(max_length=500 , label="описание")
-    year = forms.IntegerField(max_value=4 , label='Год выпуска')
+    mileage = forms.IntegerField(label='Пробег', min_value=0, required=True)
+    year = forms.IntegerField(max_value=now_year, label='Год выпуска')
     body_type = forms.ChoiceField(choices=BodyType.choices, label='Тип кузова')
     engine = forms.ChoiceField(choices=Engine.choices, label='Топливо')
     engine_capacity = forms.DecimalField(max_digits=4, decimal_places=1, label='Объем двигателя (л)')
@@ -54,9 +56,9 @@ class CarForm(forms.ModelForm):
     class Meta:
         model = Car
         
-        fields = ['mark', 'model', 'year', 'description' , 'body_type', 'ruletype', 'drive', 'gearbox', 'engine',
+        fields = ['mark', 'model', 'year', 'mileage' ,'description' , 'body_type', 'ruletype', 'drive', 'gearbox', 'engine',
                 'engine_capacity', 'color', 'condition', 'customs_cleared', 
-                'vin_code' , 'currency' , 'price' , 'special_notes' 
+                'vin_code' , 'currency' , 'price' , 'special_notes' ,
         ]
 
 class CarPhotoForm(forms.ModelForm):

@@ -13,7 +13,7 @@ def car_list(request):
     
     return render(request, 'cars_list.html', {'cars': cars})
 
-@login_required
+# @login_required
 def add_car(request):
     if request.method == 'POST':
         form = CarForm(request.POST)
@@ -38,15 +38,17 @@ def add_car(request):
         form = CarForm()
         photo_form = CarPhotoForm()
         special_notes_form = SpecialNotesForm()
-    return render(request, 'add_car.html', 
-    {'form': form, 'photo_form': photo_form, 'special_notes_form': special_notes_form})
+    return render(request, 'add_car.html',  {'form': form, 'photo_form': photo_form, 'special_notes_form': special_notes_form})
 
-# @login_required
-# def remove_car()
-
+@login_required
+def delete_car(request, car_id):
+    car = get_object_or_404(Car, pk=car_id)
+    car.delete()
+    return redirect('profile', user_id=request.user.id) 
 
 
 @login_required
+
 def favorites_list(request):
     user = request.user
     favorites = user.favorites_list.all()
@@ -63,14 +65,15 @@ def detail_page(request, car_id):
         'car_photos': car_photos,
     }
     return render(request, 'detail_page.html', context)
-@login_required
 
-def profile_view(request):
-    user = request.user
+
+@login_required
+def profile_view(request, user_id):
+    user = get_object_or_404(User, id=user_id)
     cars = Car.objects.filter(owner=user)
 
     context = {
-        'user': user,
+        'profile_user': user,
         'cars': cars,
     }
     return render(request, 'profile.html', context)
