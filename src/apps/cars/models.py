@@ -1,4 +1,4 @@
-from src.apps.account.models import User
+from src.apps.user.models import User
 from src.apps.cars.choices import *
 
 class CarMake(models.Model):
