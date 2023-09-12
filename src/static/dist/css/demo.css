@@ -151,7 +151,12 @@ pre.highlight::-webkit-scrollbar-corner,
   height: 100%;
   border-radius: 2px 2px 0 0;
 }
-
+body {
+  background-image: url('{% static "dist/background.jpg" %}');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
 .card-sponsor {
   background: var(--tblr-primary-lt) no-repeat center/100% 100%;
   border-color: var(--tblr-primary);

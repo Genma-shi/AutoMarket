@@ -1,7 +1,11 @@
 from django.shortcuts import render , redirect
+
+from src.apps.cars.filter import CarFilter
 from .models import Car
 from .forms import *
+from django.core.paginator import Paginator, Page
 
+from django.views.generic import View , ListView
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 
@@ -10,24 +14,27 @@ from django.http.response import HttpResponse
 
 def car_list(request):
     cars = Car.objects.all()
-    
-    return render(request, 'cars_list.html', {'cars': cars})
+    cars_per_page = 10
+    paginator = Paginator(cars, cars_per_page)
+    page_number = request.GET.get('page')
+    page = paginator.get_page(page_number)
 
-# @login_required
+    return render(request, 'cars_list.html', {'page': page})
+
+@login_required
 def add_car(request):
     if request.method == 'POST':
-        form = CarForm(request.POST)
-        special_notes_form = SpecialNotesForm(request.POST)
+        form = CarForm(request.POST, request.FILES)
         print(form.is_valid())
-        if form.is_valid() and special_notes_form.is_valid():
+        # print(special_notes_form.is_valid())
+        if form.is_valid():
 
             car = form.save(commit=False)
             car.owner = request.user
             car.save()
 
-            special_notes = special_notes_form.save()
-            car.special_notes.add(special_notes)
             photos = request.FILES.getlist('photos')
+            
             for photo in photos:
                 CarPhoto.objects.create(
                     image=photo,
@@ -37,8 +44,7 @@ def add_car(request):
     else:
         form = CarForm()
         photo_form = CarPhotoForm()
-        special_notes_form = SpecialNotesForm()
-    return render(request, 'add_car.html',  {'form': form, 'photo_form': photo_form, 'special_notes_form': special_notes_form})
+    return render(request, 'add_car.html',  {'form': form})
 
 @login_required
 def delete_car(request, car_id):
@@ -48,7 +54,6 @@ def delete_car(request, car_id):
 
 
 @login_required
-
 def favorites_list(request):
     user = request.user
     favorites = user.favorites_list.all()
@@ -59,6 +64,9 @@ def favorites_list(request):
 @login_required
 def detail_page(request, car_id):
     car = get_object_or_404(Car, id=car_id)
+    car.views_count += 1 
+    car.save()  
+
     car_photos = car.photos.all()
     context = {
         'car': car,
@@ -99,3 +107,47 @@ def remove_to_favorites_list(request , pk):
     else:
         return HttpResponse("Fail")
     return redirect ("favorites_list")
+
+# первый вариант 
+class CarFilterView(ListView):
+    model = Car
+    template_name = 'car_filter.html'
+    context_object_name = 'cars'    
+    paginate_by = 10
+
+    def get_queryset(self):
+        queryset = Car.objects.all()
+        filter = CarFilter(self.request.GET, queryset=queryset)
+        return filter.qs
+
+@login_required
+def car_filter(request):
+    return CarFilterView.as_view()(request)
+    
+# второй вариант 
+@login_required    
+def car_filter(request):
+    # Создайте объект фильтрации на основе GET-параметров
+    filter = CarFilter(request.GET, queryset=Car.objects.all())
+    
+    # Если форма отправлена, примените фильтр к запросу
+    if filter.is_valid():
+        cars = filter.qs
+    else:
+        cars = Car.objects.all()  # Если форма не валидна, покажите все машины
+        
+    return render(request, 'car_filter.html', {'filter': filter, 'cars': cars})
+
+
+def update_car(request, car_id):
+    car_instance = get_object_or_404(Car, id=car_id)
+
+    if request.method == 'POST':
+        form = CarForm(request.POST, instance=car_instance)
+        if form.is_valid():
+            form.save()
+            return redirect('detail_page', car_id=car_id)  # Redirect to car detail page
+    else:
+        form = CarForm(instance=car_instance)
+
+    return render(request, 'car_update_form.html', {'form': form})

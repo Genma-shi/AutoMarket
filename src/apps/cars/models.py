@@ -32,7 +32,8 @@ class Car(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Цена')
     body_type = models.CharField("Тип кузова", max_length=13, choices=BodyType.choices)
     engine = models.CharField("топливо", max_length=13, choices=Engine.choices)
-
+    
+    views_count = models.PositiveIntegerField("Количество просмотров", default=0)
     mileage = models.PositiveIntegerField(verbose_name='Пробег', default=0, help_text="Км")
     drive = models.CharField("привод", max_length=20, choices=DriveType.choices)
     gearbox = models.CharField("коробка передач", max_length=15, choices=GearboxType.choices)
@@ -45,7 +46,8 @@ class Car(models.Model):
     vin_code = models.CharField("наличие вин кода",max_length=5,choices=VINcode.choices, default= False ,blank=True,)
     currency = models.CharField("валюта" , max_length=11 , choices=Currency.choices , default= Currency.USD)
     special_notes = models.ManyToManyField(Special_notes  , blank=True)
-    
+    additional_note = models.CharField("Дополнительние приметы", max_length=255, null=True, blank=True)
+
 
     def __str__(self):
         return f"{self.mark} {self.model} ({self.year})"

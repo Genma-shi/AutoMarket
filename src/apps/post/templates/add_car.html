@@ -1,11 +1,18 @@
 {% extends 'base.html' %} 
 {% load static %}
 {% block content %} 
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    {{ special_notes_form.as_p }}
-    <button type="submit" class="btn btn-primary">Опубликовать машину</button>
-</form>
+
+{% load crispy_forms_tags %}
+<div class="page-wrapper">
+    <div class="page-body">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% crispy form %}
+            <!-- <input type="file" name="photos" accept="image/*" multiple> -->
+            
+            
+        </form>
+    </div>        
+</div>
 {% endblock %}
 

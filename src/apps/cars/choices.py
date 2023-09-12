@@ -1,8 +1,8 @@
 from django.db import models
 
 class RuleType(models.TextChoices):
-    RIGHT = "right", "правый"
     LEFT = "left", "левый"
+    RIGHT = "right", "правый"
 
 
 class DriveType(models.TextChoices):
