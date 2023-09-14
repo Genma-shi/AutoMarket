@@ -26,7 +26,7 @@ class CarPart(models.Model):
     location = models.CharField(max_length=100)      # Местонахождение запчасти (например, склад, магазин)
     is_available = models.BooleanField('в наличий' , default=True) # Флаг доступности запчасти
 
-    views_count = models.PositiveIntegerField("Количество просмотров", default=0)
+    views_count = models.PositiveIntegerField("Количество просмотров", default=0  )
     description = models.TextField('описание' , blank=True, null=True)  # Описание запчасти
     seller_contact = models.CharField('номер телефона' ,max_length=100)       # Контактная информация продавца
     car_part_brand = models.ForeignKey(Car_Part_Brand, on_delete=models.CASCADE , related_name= "carparts") # бренд запчасти

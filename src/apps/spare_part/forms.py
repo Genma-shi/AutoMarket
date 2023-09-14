@@ -72,7 +72,8 @@ class CarPartForm(forms.ModelForm):
 
     class Meta:
         model = CarPart
-        fields = '__all__'  
+        fields = ['name','car_model','year','price','vendor_code','condition','location',
+                'is_available','description','seller_contact','car_part_brand',]
     widgets = {
         'description': forms.Textarea(attrs={'rows': 4}),
     }

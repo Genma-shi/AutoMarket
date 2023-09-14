@@ -8,7 +8,7 @@
     <div class="page-body">
       <div class="container-xl">
         <div class="card">
-
+          
           <div class="row g-0">
             <div class="col d-flex flex-column">
               <div class="card-body">
@@ -26,12 +26,95 @@
                           {% endif %}
                 </a>
               </div>
-                </div>
-
-
-
+        </div>
+                <h3 class="card-title mt-4">
                 <div class="row g-3">
-                  <div class="col-md">
+                  <div class="col-12">
+                    <div class="card">
+                      <div class="table-responsive">
+                        <table
+        class="table table-vcenter card-table table-striped">
+                          <thead>
+                            <tr>
+                              <th>Name</th>
+                              <th>Title</th>
+                              <th>Email</th>
+                              <th>Role</th>
+                              <th class="w-1"></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td >Maryjo Lebarree</td>
+                              <td class="text-muted" >
+                                Civil Engineer, Product Management
+                              </td>
+                              <td class="text-muted" ><a href="#" class="text-reset">mlebarree5@unc.edu</a></td>
+                              <td class="text-muted" >
+                                User
+                              </td>
+                              <td>
+                                <a href="#">Edit</a>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td >Egan Poetz</td>
+                              <td class="text-muted" >
+                                Research Nurse, Engineering
+                              </td>
+                              <td class="text-muted" ><a href="#" class="text-reset">epoetz6@free.fr</a></td>
+                              <td class="text-muted" >
+                                Admin
+                              </td>
+                              <td>
+                                <a href="#">Edit</a>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td >Kellie Skingley</td>
+                              <td class="text-muted" >
+                                Teacher, Services
+                              </td>
+                              <td class="text-muted" ><a href="#" class="text-reset">kskingley7@columbia.edu</a></td>
+                              <td class="text-muted" >
+                                User
+                              </td>
+                              <td>
+                                <a href="#">Edit</a>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td >Christabel Charlwood</td>
+                              <td class="text-muted" >
+                                Tax Accountant, Engineering
+                              </td>
+                              <td class="text-muted" ><a href="#" class="text-reset">ccharlwood8@nifty.com</a></td>
+                              <td class="text-muted" >
+                                Owner
+                              </td>
+                              <td>
+                                <a href="#">Edit</a>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td >Haskel Shelper</td>
+                              <td class="text-muted" >
+                                Staff Scientist, Legal
+                              </td>
+                              <td class="text-muted" ><a href="#" class="text-reset">hshelper9@woothemes.com</a></td>
+                              <td class="text-muted" >
+                                Admin
+                              </td>
+                              <td>
+                                <a href="#">Edit</a>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md ">
                     <div class="text-center form-label">Марка</div>
                     <div class="text-center border">{{ car.mark.name }}</div>
                   </div>
@@ -44,14 +127,13 @@
                     <div class=" text-center border">{{ car.year }}</div>
                   </div>
                   <div class="col-md">
-                    <div class="text-center form-label">Расположение руля </div>
-                    <div class=" text-center border">{{ car.get_ruletype_display }}</div>
+                    <div class="text-center form-label">Цена</div>
+                    <div class=" text-center border">{{car.price}} {{ car.currency }}</div>
                   </div>
                   
                 </div>
-                
-            
-                <h3 class="card-title mt-4"></h3>
+              </h3>
+                <h3 class="card-title mt-4">
                 <p class="card-subtitle"></p>
                 <div class="row g-3">
                     <div class="col-md">
@@ -73,7 +155,8 @@
 
 
                 </div>
-                <h3 class="card-title mt-4"></h3>
+              </h3>
+                <h3 class="card-title mt-4">
                 <div class="row g-3">
                     <div class="col-md">
                         <div class="text-center form-label">Обьем </div>
@@ -92,22 +175,52 @@
                         <div class=" text-center border">{{ car.mileage }} / км</div>
                       </div>
                     </div>
-                    <div class="row g-3">
-                        <div class="col-md">
-                            <div class="text-center form-label">Тип кузова</div>
-                            <div class=" text-center border">{{ car.get_body_type_display }}</div>
-                          </div>
-                          <div class="col-md">
-                            <div class="text-center form-label">Кпп</div>
-                            <div class=" text-center border">{{ car.get_gearbox_display }}</div>
-                          </div>
-                          <div class="col-md">
-                            <div class="text-center form-label">Привод</div>
-                            <div class=" text-center border">{{ car.get_drive_display }}</div>
-                          </div>
-                    </div>
+              </h3>
+                <h3 class="card-title mt-4">
+                <div class="row g-3">
+                    <div class="col-md">
+                        <div class="text-center form-label">Тип кузова</div>
+                        <div class=" text-center border">{{ car.get_body_type_display }}</div>
+                      </div>
+                      <div class="col-md">
+                        <div class="text-center form-label">Расположение руля </div>
+                        <div class=" text-center border">{{ car.get_ruletype_display }}</div>
+                      </div>
+                      <div class="col-md">
+                        <div class="text-center form-label">Привод</div>
+                        <div class=" text-center border">{{ car.get_drive_display }}</div>
+                      </div>
+                      <div class="col-md">
+                        <div class="text-center form-label">Просмотры</div>
+                        <div class=" text-center border">{{ car.views_count }}</div>
+                      </div>
+                </div>
+              </h3>
+
+              <div class="col-auto">
                 
+                   Внешние особенности
+                    <div class="card col-md-2 ">
+                    {% for note in car.special_notes.all %}
+                        <li>{{ note.name }}</li>
+                    {% empty %}
+                        <li>Нет дополнительных примечаний.</li>
+                    {% endfor %}
+                    {% if car.additional_note %}
+                  {{ car.additional_note }}
+                  
+                  {% endif %}
+                  </div>
                 
+            </div>
+
+            <div class="text-center form-label">описание</div>
+        <div class="card timeline-event-card">
+            <div class="card-body">
+              <div class="text-muted">{{ car.description }}</div>
+            </div>
+        </div>
+
               </div>
               <div class="card-footer bg-transparent mt-auto">
                 <div class="btn-list justify-content-end">
@@ -207,16 +320,5 @@
         </div>
          -->
         
-        
-    </div>
-    <div class="card-footer bg-transparent mt-auto">
-        <div class="btn-list justify-content-end">
-            <a href="{% url 'cars' %}" class="btn">
-                назад
-            </a>
-            
-        </div>
-    </div>
-    </div>
-
+      
 {% endblock %}

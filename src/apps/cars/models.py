@@ -35,6 +35,7 @@ class Car(models.Model):
     
     views_count = models.PositiveIntegerField("Количество просмотров", default=0)
     mileage = models.PositiveIntegerField(verbose_name='Пробег', default=0, help_text="Км")
+   
     drive = models.CharField("привод", max_length=20, choices=DriveType.choices)
     gearbox = models.CharField("коробка передач", max_length=15, choices=GearboxType.choices)
     engine_capacity = models.DecimalField(max_digits=4, decimal_places=1, verbose_name='Объем двигателя л')

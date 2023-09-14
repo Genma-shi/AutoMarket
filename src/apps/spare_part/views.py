@@ -12,6 +12,7 @@ def add_car_part(request):
     if request.method == 'POST':
         car_part_form = CarPartForm(request.POST, request.FILES)
         print(car_part_form.is_valid())
+        print(car_part_form.errors)
         if car_part_form.is_valid():
             car_part = car_part_form.save(commit=False)
             car_part.save()  
@@ -19,7 +20,7 @@ def add_car_part(request):
             for image in request.FILES.getlist('part_photos'):
                 CarPartImage.objects.create(car_part=car_part, image=image)
 
-            return redirect('car_part.html')  
+            return redirect('spare_part')  
     else:
         car_part_form = CarPartForm()
 

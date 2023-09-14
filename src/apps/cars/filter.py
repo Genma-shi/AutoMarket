@@ -21,25 +21,25 @@ class CarFilter(django_filters.FilterSet):
     year_min = django_filters.NumberFilter(
         field_name='year',
         lookup_expr='gte',
-        label='Год (мин)'
+        label='Год от:'
     )
 
     year_max = django_filters.NumberFilter(
         field_name='year',
         lookup_expr='lte',
-        label='Год (макс)'
+        label='Год до:'
     )
 
     price_min = django_filters.NumberFilter(
         field_name='price',
         lookup_expr='gte',
-        label='Цена (мин)'
+        label='Цена от:'
     )
 
     price_max = django_filters.NumberFilter(
         field_name='price',
         lookup_expr='lte',
-        label='Цена (макс)'
+        label='Цена до:'
     )
 
     class Meta:

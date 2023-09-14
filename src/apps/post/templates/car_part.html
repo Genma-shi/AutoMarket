@@ -1,24 +1,35 @@
 {% extends 'base.html' %} 
 {% load static %}
 {% block content %}
-<div class="page-wrapper">
-    {% for part in car_parts %} 
-    <div class="col-md-6 col-xl-3">
-        <div class="card">
-        <div class="card-body text-center">
-            <div class="mb-3 text-center">
-                <img src="{{ part.part_photos.first.image.url }}" alt="page not found 404" class="avatar avatar-xl rounded">
+<div class="page-body">
+    <div class="container-xl">
+      <div class="row row-cards">
+            {% for part in car_parts %} 
+            <div class="col-md-6 col-xl-3">
+                <div class="card">
+                    <div class="card-body text-center d-flex flex-column justify-content-between">
+                        <div class="mb-3 text-center">
+                            <img src="{{ part.part_photos.first.image.url }}" alt="page not found 404" class="avatar avatar-xl rounded">
+                        </div>
+                        <div>
+                            
+                            <div class="card-title mb-1">{{ part.name }} на {% if part.car_model.first.id %}
+                                <a href="{% url 'filtered_cars' pk=part.car_model.first.id %}">{{ part.car_model.first.name }}</a>
+                              {% else %}
+                                <!-- Обработка случая, когда car_id пустой или не существует -->
+                              {% endif %}
+                            </div>
+                            <div class="full-width-container">{{ part.description|truncatechars:30 }}</div>
+                            <div>{{ part.price }}/сом</div>
+                        </div>
+                    </div>
+                <a href="" class="card-btn"></a>
+                </div>
             </div>
-            <div class="card-title mb-1">{{ part.name }} на <a href="#">{{ part.car_model.first.name }}</a></div>
-            <div class="full-width-container">{{ part.description|truncatechars:75 }}</div> <div> {{ part.price }}/сом </div>
-        </div>
-        <a href="#" class="card-btn"></a>
-        </div>
-    
-    
-    </div>
-    
 {% endfor %}
+</div>
+</div>
+</div>
 <style>
     .full-width-container {
     /* width: 100%; */

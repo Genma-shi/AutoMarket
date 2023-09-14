@@ -1,4 +1,5 @@
 from django.shortcuts import render , redirect
+from django.http import HttpResponseBadRequest
 
 from src.apps.cars.filter import CarFilter
 from .models import Car
@@ -11,15 +12,20 @@ from django.shortcuts import render, get_object_or_404
 
 from django.http.response import HttpResponse
 # Create your views here.
+class CarListView(ListView):
+    model = Car
+    template_name = 'car_list.html'  # Шаблон для отображения списка элементов
+    context_object_name = 'list'  # Имя переменной контекста для списка элементов
+    paginate_by = 30
 
-def car_list(request):
-    cars = Car.objects.all()
-    cars_per_page = 10
-    paginator = Paginator(cars, cars_per_page)
-    page_number = request.GET.get('page')
-    page = paginator.get_page(page_number)
+    def car_list(request):
+        cars = Car.objects.all()
+        cars_per_page = 10
+        paginator = Paginator(cars, cars_per_page)
+        page_number = request.GET.get('page')
+        page = paginator.get_page(page_number)
 
-    return render(request, 'cars_list.html', {'page': page})
+        return render(request, 'cars_list.html', {'page': page})
 
 @login_required
 def add_car(request):
@@ -107,22 +113,6 @@ def remove_to_favorites_list(request , pk):
     else:
         return HttpResponse("Fail")
     return redirect ("favorites_list")
-
-# первый вариант 
-class CarFilterView(ListView):
-    model = Car
-    template_name = 'car_filter.html'
-    context_object_name = 'cars'    
-    paginate_by = 10
-
-    def get_queryset(self):
-        queryset = Car.objects.all()
-        filter = CarFilter(self.request.GET, queryset=queryset)
-        return filter.qs
-
-@login_required
-def car_filter(request):
-    return CarFilterView.as_view()(request)
     
 # второй вариант 
 @login_required    
@@ -137,6 +127,24 @@ def car_filter(request):
         cars = Car.objects.all()  # Если форма не валидна, покажите все машины
         
     return render(request, 'car_filter.html', {'filter': filter, 'cars': cars})
+
+def filtered_cars(request, pk=None):
+    # Получите объект машины по ее Primary Key (pk)
+    if pk:
+        car = get_object_or_404(Car, pk=pk)
+    else:
+        car = None
+
+    # Создайте объект фильтрации на основе GET-параметров
+    filter = CarFilter(request.GET, queryset=Car.objects.all())
+    
+    # Если форма отправлена, примените фильтр к запросу
+    if filter.is_valid():
+        cars = filter.qs
+    else:
+        cars = Car.objects.all()
+
+    return render(request, 'car_filter.html', {'filter': car, 'cars': cars})
 
 
 def update_car(request, car_id):
