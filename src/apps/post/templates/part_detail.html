@@ -1,0 +1,77 @@
+{% extends 'base.html' %} 
+{% load static %}
+
+{% block content %}
+<div class="page-wrapper">
+    {% if part.photos.first %}
+    <div class="page-body">
+      <div class="container-xl">
+        <div class="row g-2 g-md-3">
+          <div class="col-lg-6">
+            <div class="row g-2 g-md-3">
+              <div class="col-6">
+                <div class="row g-2 g-md-3">
+                  {% for photo in part %}
+                  <div class="col-6">
+                    <a data-fslightbox="gallery" href="{{ photo.image.url }}">
+                      
+                      <div class="img-responsive img-responsive-1x1 rounded-3 border" style="background-image: url('{{ photo.image.url }}')"></div>
+                    </a>
+                  </div>
+                  {% endfor %} 
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    
+    <!-- Page body -->
+    <div class="page-body">
+      <div class="container-xl">
+        <div class="row row-cards">
+          <div class="col-10">
+            <div class="card">
+              <div class="table-responsive">
+                <table class="table table-vcenter card-table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Название</th>
+                      <th>Модель автомобиля</th>
+                      <th>Год</th>
+                      <th>Цена</th>
+                      <th>Серийный номер</th>
+                      <th>Состояние</th>
+                      <th>Местонахождение</th>
+                      <th>Доступность</th>
+                      <th>Количество просмотров</th>
+                      <th>Контакт продавца</th>
+                      <th>Бренд запчасти</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{{ part.name }}</td>
+                      <td class="text-muted">{{ part.car_model.all.0.name }}</td>
+                      <td class="text-muted">{{ part.year }}</td>
+                      <td class="text">{{ part.price }}</td>
+                      <td class="text-muted">{{ part.vendor_code }}</td>
+                      <td class="text-muted">{{ part.get_condition_display }}</td>
+                      <td class="text-muted">{{ part.location }}</td>
+                      <td class="text-muted">{{ part.is_available }}</td>
+                      <td class="text-muted">{{ part.views_count }}</td>
+                      <td class="text-muted">{{ part.seller_contact }}</td>
+                      <td class="text-muted">{{ part.car_part_brand.name }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -4,7 +4,7 @@
 <div class="page-body">
     <div class="container-xl">
       <div class="row row-cards">
-            {% for part in car_parts %} 
+            {% for part in page %} 
             <div class="col-md-6 col-xl-3">
                 <div class="card">
                     <div class="card-body text-center d-flex flex-column justify-content-between">
@@ -23,13 +23,65 @@
                             <div>{{ part.price }}/сом</div>
                         </div>
                     </div>
-                <a href="" class="card-btn"></a>
+                    <a href="{% url 'carpart-detail' part.pk %}" class="btn">Подробнее</a>
                 </div>
             </div>
 {% endfor %}
 </div>
 </div>
 </div>
+
+<div class="page-wrapper">
+    <div class="page-body">
+        <ul class="pagination" style="margin: 0 auto; width: fit-content;">
+            {% if page.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page=1">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M15 6l-6 6l6 6" />
+                    </svg>
+                    &laquo; First
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page.previous_page_number }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M15 6l-6 6l6 6" />
+                    </svg>
+                    Previous
+                </a>
+            </li>
+            {% endif %}
+            {% for page_number in page.paginator.get_elided_page_range %}
+            <li class="page-item {% if page_number == page.number %}active{% endif %}">
+                {% if page_number == page.paginator.ELLIPSIS %}
+                <span class="page-link">{{ page_number }}</span>
+                {% else %}
+                <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+                {% endif %}
+            </li>
+            {% endfor %}
+            {% if page.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page.next_page_number }}">
+                    Next
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M9 6l6 6l-6 6" />
+                    </svg>
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page.paginator.num_pages }}">
+                    Last &raquo;
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+  </div>
 <style>
     .full-width-container {
     /* width: 100%; */

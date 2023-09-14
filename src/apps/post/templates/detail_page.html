@@ -2,227 +2,159 @@
 {% load static %}
 {% block content %}
 
-
+{% if car.photos.first %}
+        
 <div class="page-wrapper">
-    <!-- Page body -->
-    <div class="page-body">
-      <div class="container-xl">
-        <div class="card">
-          
-          <div class="row g-0">
-            <div class="col d-flex flex-column">
-              <div class="card-body">
-                <h2 class="mb-4 text-center">{{ car.owner.email }}</h2>
-                <div class="row align-items-center">
-                  <div class="col-auto "><a href="#">
-                    {% if car.photos.first %}
-                        {% for photo in car_photos %}
-
-                        <img src="{{ photo.image.url }}"  width="340px" height="290px" class="rounded">
-                        
-                        {% endfor %}
-                          {% else %}
-                          <img src="{% static '\dist\default_auto_logo.jpg' %}" class="card-img-top" width="170px" height="290px">               
-                          {% endif %}
-                </a>
+  
+  <div class="page-body">
+    <div class="container-xl">
+      <div class="row g-2 g-md-3">
+        <div class="col-lg-6">
+          <div class="row g-2 g-md-3">
+            <div class="col-6">
+              <div class="row g-2 g-md-3">
+                {% for photo in car_photos %}
+                <div class="col-6">
+                  <a data-fslightbox="gallery" href="{{ photo.image.url }}">
+                    
+                    <div class="img-responsive img-responsive-1x1 rounded-3 border" style="background-image: url('{{ photo.image.url }}')"></div>
+                  </a>
+                </div>
+                {% endfor %} 
               </div>
-        </div>
-                <h3 class="card-title mt-4">
-                <div class="row g-3">
-                  <div class="col-12">
-                    <div class="card">
-                      <div class="table-responsive">
-                        <table
-        class="table table-vcenter card-table table-striped">
-                          <thead>
-                            <tr>
-                              <th>Name</th>
-                              <th>Title</th>
-                              <th>Email</th>
-                              <th>Role</th>
-                              <th class="w-1"></th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td >Maryjo Lebarree</td>
-                              <td class="text-muted" >
-                                Civil Engineer, Product Management
-                              </td>
-                              <td class="text-muted" ><a href="#" class="text-reset">mlebarree5@unc.edu</a></td>
-                              <td class="text-muted" >
-                                User
-                              </td>
-                              <td>
-                                <a href="#">Edit</a>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td >Egan Poetz</td>
-                              <td class="text-muted" >
-                                Research Nurse, Engineering
-                              </td>
-                              <td class="text-muted" ><a href="#" class="text-reset">epoetz6@free.fr</a></td>
-                              <td class="text-muted" >
-                                Admin
-                              </td>
-                              <td>
-                                <a href="#">Edit</a>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td >Kellie Skingley</td>
-                              <td class="text-muted" >
-                                Teacher, Services
-                              </td>
-                              <td class="text-muted" ><a href="#" class="text-reset">kskingley7@columbia.edu</a></td>
-                              <td class="text-muted" >
-                                User
-                              </td>
-                              <td>
-                                <a href="#">Edit</a>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td >Christabel Charlwood</td>
-                              <td class="text-muted" >
-                                Tax Accountant, Engineering
-                              </td>
-                              <td class="text-muted" ><a href="#" class="text-reset">ccharlwood8@nifty.com</a></td>
-                              <td class="text-muted" >
-                                Owner
-                              </td>
-                              <td>
-                                <a href="#">Edit</a>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td >Haskel Shelper</td>
-                              <td class="text-muted" >
-                                Staff Scientist, Legal
-                              </td>
-                              <td class="text-muted" ><a href="#" class="text-reset">hshelper9@woothemes.com</a></td>
-                              <td class="text-muted" >
-                                Admin
-                              </td>
-                              <td>
-                                <a href="#">Edit</a>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md ">
-                    <div class="text-center form-label">Марка</div>
-                    <div class="text-center border">{{ car.mark.name }}</div>
-                  </div>
-                  <div class="col-md">
-                    <div class="text-center form-label">Модель</div>
-                    <div class="text-center border">{{ car.model.name }}</div>
-                  </div>
-                  <div class="col-md">
-                    <div class="text-center form-label">Год выпуска</div>
-                    <div class=" text-center border">{{ car.year }}</div>
-                  </div>
-                  <div class="col-md">
-                    <div class="text-center form-label">Цена</div>
-                    <div class=" text-center border">{{car.price}} {{ car.currency }}</div>
-                  </div>
-                  
-                </div>
-              </h3>
-                <h3 class="card-title mt-4">
-                <p class="card-subtitle"></p>
-                <div class="row g-3">
-                    <div class="col-md">
-                        <div class="text-center form-label">Состояние</div>
-                        <div class=" text-center border">{{ car.get_condition_display }}</div>
-                      </div>
-                    <div class="col-md">
-                    <div class="text-center form-label">Цвет машины</div>
-                    <div class=" text-center border">{{ car.get_color_display }}</div>
-                    </div>
-                    <div class="col-md">
-                        <div class="text-center form-label">Расстаможен</div>
-                        <div class=" text-center border">{{ car.get_customs_cleared_display }}</div>
-                      </div>
-                      <div class="col-md">
-                        <div class="text-center form-label">Vin-код</div>
-                        <div class=" text-center border">{{ car.get_vin_code_display }}</div>
-                      </div>
-
-
-                </div>
-              </h3>
-                <h3 class="card-title mt-4">
-                <div class="row g-3">
-                    <div class="col-md">
-                        <div class="text-center form-label">Обьем </div>
-                        <div class=" text-center border">{{ car.engine_capacity }} / л</div>
-                      </div>
-                      <div class="col-md">
-                        <div class="text-center form-label">Кпп</div>
-                        <div class=" text-center border">{{ car.get_gearbox_display }}</div>
-                      </div>
-                      <div class="col-md">
-                        <div class="text-center form-label">Топливо</div>
-                        <div class=" text-center border">{{ car.get_engine_display }}</div>
-                      </div>
-                      <div class="col-md">
-                        <div class="text-center form-label">Пробег</div>
-                        <div class=" text-center border">{{ car.mileage }} / км</div>
-                      </div>
-                    </div>
-              </h3>
-                <h3 class="card-title mt-4">
-                <div class="row g-3">
-                    <div class="col-md">
-                        <div class="text-center form-label">Тип кузова</div>
-                        <div class=" text-center border">{{ car.get_body_type_display }}</div>
-                      </div>
-                      <div class="col-md">
-                        <div class="text-center form-label">Расположение руля </div>
-                        <div class=" text-center border">{{ car.get_ruletype_display }}</div>
-                      </div>
-                      <div class="col-md">
-                        <div class="text-center form-label">Привод</div>
-                        <div class=" text-center border">{{ car.get_drive_display }}</div>
-                      </div>
-                      <div class="col-md">
-                        <div class="text-center form-label">Просмотры</div>
-                        <div class=" text-center border">{{ car.views_count }}</div>
-                      </div>
-                </div>
-              </h3>
-
-              <div class="col-auto">
-                
-                   Внешние особенности
-                    <div class="card col-md-2 ">
-                    {% for note in car.special_notes.all %}
-                        <li>{{ note.name }}</li>
-                    {% empty %}
-                        <li>Нет дополнительных примечаний.</li>
-                    {% endfor %}
-                    {% if car.additional_note %}
-                  {{ car.additional_note }}
-                  
-                  {% endif %}
-                  </div>
-                
             </div>
-
-            <div class="text-center form-label">описание</div>
-        <div class="card timeline-event-card">
-            <div class="card-body">
-              <div class="text-muted">{{ car.description }}</div>
-            </div>
+          </div>
         </div>
+      </div>
+    </div>
+  </div>
+      {% endif %}
+  
+      <!-- Page body -->
+  <div class="page-body">
+    <div class="container-xl">
+      <div class="row row-cards">
+        <div class="col-10">
+          <div class="card">
+            <div class="table-responsive">
+              <table
+class="table table-vcenter card-table table-striped">
+                <thead>
+                  <tr>
+                    <th>Марка</th>
+                    <th>Модель</th>
+                    <th>Обьем</th>
+                    <th>Год</th>
+                    <th>Цена</th>
+                    <th>Валюта</th>
+                    <th class="w-1"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td >{{ car.mark.name }}</td>
+                    <td class="text-muted" >{{ car.model.name }}</td>
+                    <td class="text-muted" >{{ car.engine_capacity }} л</td>
+                    <td class="text-muted" >{{ car.year }}</td>
+                    <td class="text" >{{ car.price }}</td>
+                    <td class="text-muted" >{{ car.currency }}</td>
+                    
+                  </tr>
 
-              </div>
-              <div class="card-footer bg-transparent mt-auto">
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="col-10">
+          <div class="card">
+            <div class="table-responsive">
+              <table
+ class="table table-vcenter card-table table-striped">
+                <thead>
+                  <tr>
+                    <th>Состояние</th>
+                    <th>Цвет</th>
+                    <th>Расстаможка</th>
+                    <th>VIN код</th>
+                    <th>Руль</th>
+                    <th>Просмотры</th>
+                    <th class="w-1"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td >{{ car.get_condition_display }}</td>
+                    <td class="text-muted" >{{ car.get_color_display }}</td>
+                    <td class="text-muted" >{{ car.get_customs_cleared_display }}</td>
+                    <td class="text-muted" >{{ car.get_vin_code_display }}</td>
+                    <td class="text-muted" >{{ car.get_ruletype_display }}</td>
+                    <td class="text-muted" >{{ car.views_count }}</td>    
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="col-10">
+          <div class="card">
+            <div class="table-responsive">
+              <table
+                      class="table table-vcenter card-table table-striped">
+                <thead>
+                  <tr>
+                    <th>Кпп</th>
+                    <th>Двигатель</th>
+                    <th>Пробег</th>
+                    <th>Кузов</th>
+                    <th>Привод</th>
+                    <th class="w-1"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td >{{ car.get_gearbox_display }}</td>
+                    <td class="text-muted" >{{ car.get_engine_display }}</td>
+                    <td class="text-muted" >{{ car.mileage }} км</td>
+                    <td class="text-muted" >{{ car.get_body_type_display }}</td>
+                    <td class="text-muted" >{{ car.get_drive_display }}</td> 
+                       
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card-footer bg-transparent mt-auto">
+            <div class="btn-list justify-content-end">
+              {% if request.user == car.owner %}
+                  <a href="{% url 'delete_car' car_id=car.id %}" class="btn btn-outline-danger">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash-filled" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+          <path d="M20 6a1 1 0 0 1 .117 1.993l-.117 .007h-.081l-.919 11a3 3 0 0 1 -2.824 2.995l-.176 .005h-8c-1.598 0 -2.904 -1.249 -2.992 -2.75l-.005 -.167l-.923 -11.083h-.08a1 1 0 0 1 -.117 -1.993l.117 -.007h16z" stroke-width="0" fill="currentColor"></path>
+          <path d="M14 2a2 2 0 0 1 2 2a1 1 0 0 1 -1.993 .117l-.007 -.117h-4l-.007 .117a1 1 0 0 1 -1.993 -.117a2 2 0 0 1 1.85 -1.995l.15 -.005h4z" stroke-width="0" fill="currentColor"></path>
+          </svg>
+                      Удалить
+                  </a>
+                  <a href="{% url 'update_car' car_id=car.id %}" class="btn btn-primary">
+                    Изменить
+                  </a>
+              {% endif %}
+            
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+    
+  </div>
+</div>
+
+<!-- <div class="col d-flex flex-column">
+    <div class="card-body">
+      <div class="card-footer bg-transparent mt-auto">
                 <div class="btn-list justify-content-end">
                   {% if request.user == car.owner %}
                       <a href="{% url 'delete_car' car_id=car.id %}" class="btn btn-outline-danger">
@@ -240,22 +172,6 @@
                 
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    </footer>
-  </div>
-
-
-
-
-
-
-<!-- <div class="col d-flex flex-column">
-    <div class="card-body">
         <h2 class="mb-4"></h2>
         <div class="row align-items-center">
             <div class="col-auto">
@@ -320,5 +236,175 @@
         </div>
          -->
         
+
+
+
+
+
+
+
+
+         
       
+         <!-- <div class="page-wrapper">
+          
+          <div class="page-body">
+            <div class="container-xl">
+              <div class="card">
+                
+                <div class="row g-0">
+                  <div class="col d-flex flex-column">
+                    <div class="card-body">
+                      <h2 class="mb-4 text-center">{{ car.owner.email }}</h2>
+                      <div class="row align-items-center">
+                        <div class="col-auto "><a href="#">
+                          {% if car.photos.first %}
+                              {% for photo in car_photos %}
+      
+                              <img src="{{ photo.image.url }}"  width="340px" height="290px" class="rounded">
+                              
+                              {% endfor %}
+                                {% else %}
+                                <img src="{% static '\dist\default_auto_logo.jpg' %}" class="card-img-top" width="170px" height="290px">               
+                                {% endif %}
+                      </a>
+                    </div>
+              </div>
+                      <h3 class="card-title mt-4">
+                      <div class="row g-3">
+                        
+                        <div class="col-md ">
+                          <div class="text-center form-label">Марка</div>
+                          <div class="text-center border">{{ car.mark.name }}</div>
+                        </div>
+                        <div class="col-md">
+                          <div class="text-center form-label">Модель</div>
+                          <div class="text-center border">{{ car.model.name }}</div>
+                        </div>
+                        <div class="col-md">
+                          <div class="text-center form-label">Год выпуска</div>
+                          <div class=" text-center border">{{ car.year }}</div>
+                        </div>
+                        <div class="col-md">
+                          <div class="text-center form-label">Цена</div>
+                          <div class=" text-center border">{{car.price}} {{ car.currency }}</div>
+                        </div>
+                        
+                      </div>
+                    </h3>
+                      <h3 class="card-title mt-4">
+                      <p class="card-subtitle"></p>
+                      <div class="row g-3">
+                          <div class="col-md">
+                              <div class="text-center form-label">Состояние</div>
+                              <div class=" text-center border">{{ car.get_condition_display }}</div>
+                            </div>
+                          <div class="col-md">
+                          <div class="text-center form-label">Цвет машины</div>
+                          <div class=" text-center border">{{ car.get_color_display }}</div>
+                          </div>
+                          <div class="col-md">
+                              <div class="text-center form-label">Расстаможен</div>
+                              <div class=" text-center border">{{ car.get_customs_cleared_display }}</div>
+                            </div>
+                            <div class="col-md">
+                              <div class="text-center form-label">Vin-код</div>
+                              <div class=" text-center border">{{ car.get_vin_code_display }}</div>
+                            </div>
+      
+      
+                      </div>
+                    </h3>
+                      <h3 class="card-title mt-4">
+                      <div class="row g-3">
+                          <div class="col-md">
+                              <div class="text-center form-label">Обьем </div>
+                              <div class=" text-center border">{{ car.engine_capacity }} / л</div>
+                            </div>
+                            <div class="col-md">
+                              <div class="text-center form-label">Кпп</div>
+                              <div class=" text-center border">{{ car.get_gearbox_display }}</div>
+                            </div>
+                            <div class="col-md">
+                              <div class="text-center form-label">Топливо</div>
+                              <div class=" text-center border">{{ car.get_engine_display }}</div>
+                            </div>
+                            <div class="col-md">
+                              <div class="text-center form-label">Пробег</div>
+                              <div class=" text-center border">{{ car.mileage }} / км</div>
+                            </div>
+                          </div>
+                    </h3>
+                      <h3 class="card-title mt-4">
+                      <div class="row g-3">
+                          <div class="col-md">
+                              <div class="text-center form-label">Тип кузова</div>
+                              <div class=" text-center border">{{ car.get_body_type_display }}</div>
+                            </div>
+                            <div class="col-md">
+                              <div class="text-center form-label">Расположение руля </div>
+                              <div class=" text-center border">{{ car.get_ruletype_display }}</div>
+                            </div>
+                            <div class="col-md">
+                              <div class="text-center form-label">Привод</div>
+                              <div class=" text-center border">{{ car.get_drive_display }}</div>
+                            </div>
+                            <div class="col-md">
+                              <div class="text-center form-label">Просмотры</div>
+                              <div class=" text-center border">{{ car.views_count }}</div>
+                            </div>
+                      </div>
+                    </h3>
+      
+                    <div class="col-auto">
+                      
+                         Внешние особенности
+                          <div class="card col-md-2 ">
+                          {% for note in car.special_notes.all %}
+                              <li>{{ note.name }}</li>
+                          {% empty %}
+                              <li>Нет дополнительных примечаний.</li>
+                          {% endfor %}
+                          {% if car.additional_note %}
+                        {{ car.additional_note }}
+                        
+                        {% endif %}
+                        </div>
+                      
+                  </div>
+      
+                  <div class="text-center form-label">описание</div>
+              <div class="card timeline-event-card">
+                  <div class="card-body">
+                    <div class="text-muted">{{ car.description }}</div>
+                  </div>
+              </div>
+      
+                    </div>
+                    <div class="card-footer bg-transparent mt-auto">
+                      <div class="btn-list justify-content-end">
+                        {% if request.user == car.owner %}
+                            <a href="{% url 'delete_car' car_id=car.id %}" class="btn btn-outline-danger">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash-filled" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+         <path d="M20 6a1 1 0 0 1 .117 1.993l-.117 .007h-.081l-.919 11a3 3 0 0 1 -2.824 2.995l-.176 .005h-8c-1.598 0 -2.904 -1.249 -2.992 -2.75l-.005 -.167l-.923 -11.083h-.08a1 1 0 0 1 -.117 -1.993l.117 -.007h16z" stroke-width="0" fill="currentColor"></path>
+         <path d="M14 2a2 2 0 0 1 2 2a1 1 0 0 1 -1.993 .117l-.007 -.117h-4l-.007 .117a1 1 0 0 1 -1.993 -.117a2 2 0 0 1 1.85 -1.995l.15 -.005h4z" stroke-width="0" fill="currentColor"></path>
+      </svg>
+                                Удалить
+                            </a>
+                            <a href="{% url 'update_car' car_id=car.id %}" class="btn btn-primary">
+                              Изменить
+                            </a>
+                        {% endif %}
+                      
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          </footer>
+        </div> -->
 {% endblock %}

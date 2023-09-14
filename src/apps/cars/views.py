@@ -16,11 +16,11 @@ class CarListView(ListView):
     model = Car
     template_name = 'car_list.html'  # Шаблон для отображения списка элементов
     context_object_name = 'list'  # Имя переменной контекста для списка элементов
-    paginate_by = 30
+    paginate_by = 5
 
     def car_list(request):
         cars = Car.objects.all()
-        cars_per_page = 10
+        cars_per_page = 1
         paginator = Paginator(cars, cars_per_page)
         page_number = request.GET.get('page')
         page = paginator.get_page(page_number)

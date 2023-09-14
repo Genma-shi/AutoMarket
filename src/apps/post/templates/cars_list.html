@@ -5,65 +5,119 @@
 {% block content %}
 
 <div class="page-wrapper">
-    <div class="page-body">
+  <div class="page-body">
       <div class="container-xl">
-        <div class="row row-cards">
-          {% for car in page %}
+          <div class="row row-cards">
+              {% for car in page %}
               <div class="col-sm-6 col-lg-4">
                   <div class="card card-sm">
                       <a href="{% url 'detail_page' car.id %}" class="d-block">
-                        {% if car.photos.first %}
+                          {% if car.photos.first %}
                           <img src="{{ car.photos.first.image.url }}" class="card-img-top" width="340px" height="290px">
-                        {% else %}
+                          {% else %}
                           <img src="{% static 'dist/default_auto_logo.jpg' %}" class="card-img-top" width="340px" height="290px">
-                        {% endif %}
+                          {% endif %}
                       </a>
                       <div class="card-body">
-                        
                           <div class="d-flex align-items">
                               <div>
-                                <div style="display: flex; justify-content: space-between;">
-                                  <span>{{ car.mark.name }} {{ car.model.name }}          {{ car.year }}год</span>                            
-                              </div>
+                                  <div style="display: flex; justify-content: space-between;">
+                                      <span>{{ car.mark.name }} {{ car.model.name }} {{ car.year }}год</span>
+                                  </div>
                                   <div class="text-muted">{{ car.owner.email }}</div>
                               </div>
                               <div class="align-right">
-                              <a href="{% url 'add_to_favorites' pk=car.pk  %}" >
-                                {% if car in request.user.favorites_list.all %}
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-heart-minus" width="32" height="32" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                  <path d="M19.5 12.572l-2.494 2.47m-5.006 4.958l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572"></path>
-                                  <path d="M16 19h6"></path>
-                              </svg>
-                                {% else %}
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-heart-plus" width="32" height="32" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                  <path d="M12 20l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.96 6.053"></path>
-                                  <path d="M16 19h6"></path>
-                                  <path d="M19 16v6"></path>
-                              </svg>
-                              {% endif %} 
-                              </a>
+                                  <a href="{% url 'add_to_favorites' pk=car.pk  %}">
+                                      {% if car in request.user.favorites_list.all %}
+                                      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-heart-minus" width="32" height="32" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                          <path d="M19.5 12.572l-2.494 2.47m-5.006 4.958l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572"></path>
+                                          <path d="M16 19h6"></path>
+                                      </svg>
+                                      {% else %}
+                                      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-heart-plus" width="32" height="32" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                          <path d="M12 20l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.96 6.053"></path>
+                                          <path d="M16 19h6"></path>
+                                          <path d="M19 16v6"></path>
+                                      </svg>
+                                      {% endif %}
+                                  </a>
                               </div>
                           </div>
-
-                          <div>
-                            {{ car.price }} {{ car.currency }}
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                              <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"></path>
-                              <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"></path>
-                           </svg> {{ car.views_count }}
+                          <div class="price-right">
+                              {{ car.price }} {{ car.currency }}
+                              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                  <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"></path>
+                                  <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"></path>
+                              </svg> {{ car.views_count }}
                           </div>
                       </div>
                   </div>
               </div>
-            {% endfor %}
-        </div>
+              {% endfor %}
+          </div>
       </div>
-    </div>
   </div>
 </div>
+
+<div class="page-wrapper">
+  <div class="page-body">
+      <ul class="pagination" style="margin: 0 auto; width: fit-content;">
+          {% if page.has_previous %}
+          <li class="page-item">
+              <a class="page-link" href="?page=1">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                      <path d="M15 6l-6 6l6 6" />
+                  </svg>
+                  &laquo; First
+              </a>
+          </li>
+          <li class="page-item">
+              <a class="page-link" href="?page={{ page.previous_page_number }}">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                      <path d="M15 6l-6 6l6 6" />
+                  </svg>
+                  Previous
+              </a>
+          </li>
+          {% endif %}
+          {% for page_number in page.paginator.get_elided_page_range %}
+          <li class="page-item {% if page_number == page.number %}active{% endif %}">
+              {% if page_number == page.paginator.ELLIPSIS %}
+              <span class="page-link">{{ page_number }}</span>
+              {% else %}
+              <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+              {% endif %}
+          </li>
+          {% endfor %}
+          {% if page.has_next %}
+          <li class="page-item">
+              <a class="page-link" href="?page={{ page.next_page_number }}">
+                  Next
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                      <path d="M9 6l6 6l-6 6" />
+                  </svg>
+              </a>
+          </li>
+          <li class="page-item">
+              <a class="page-link" href="?page={{ page.paginator.num_pages }}">
+                  Last &raquo;
+              </a>
+          </li>
+          {% endif %}
+      </ul>
+  </div>
+</div>
+
+
+
+
+
 <style>
   .align-right {
             text-align: right;
@@ -74,21 +128,5 @@
     /* Другие стили, если необходимо */
 }
 </style>
-
-<div class="pagination">
-  <span class="step-links">
-      {% if page.has_previous %}
-          <a href="?page=1">&laquo; First</a>
-          <a href="?page={{ page.previous_page_number }}">Previous</a>
-      {% endif %}
-
-      <span class="current-page">{{ page.number }}</span>
-
-      {% if page.has_next %}
-          <a href="?page={{ page.next_page_number }}">Next</a>
-          <a href="?page={{ page.paginator.num_pages }}">Last &raquo;</a>
-      {% endif %}
-  </span>
-</div>
 
 {% endblock %}
