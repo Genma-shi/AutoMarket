@@ -45,7 +45,8 @@ def add_car_part(request):
 
 def carpart_detail_view(request, pk):
     carpart = get_object_or_404(CarPart, pk=pk)
-
+    carpart.views_count += 1 
+    carpart.save()  
     part_photos = carpart.part_photos.all()  # Если у вас используется related_name='part_photos' в ForeignKey
 
     return render(request, 'part_detail.html', {'part': carpart, 'part_photos': part_photos})

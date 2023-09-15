@@ -7,9 +7,11 @@ from django.views.generic import TemplateView ,  RedirectView
 from django.urls import path , include
 
 urlpatterns = [
+    path('', views.car_filter, name='car_filter'),
+
+    
     path('cars_list/', views.CarListView.car_list, name='cars'),
     path('car_list/', views.car_filter, name='car_filter'),
-    path('', views.car_filter, name='car_filter'),
 
 
     path('add_car/', views.add_car, name='add_car'),

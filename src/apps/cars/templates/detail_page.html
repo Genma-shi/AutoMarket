@@ -108,6 +108,7 @@ class="table table-vcenter card-table table-striped">
                     <th>Кузов</th>
                     <th>Привод</th>
                     <th>Номер</th>
+                    <th>Месторасположение</th>
                     <th class="w-1"></th>
                   </tr>
                 </thead>
@@ -119,7 +120,15 @@ class="table table-vcenter card-table table-striped">
                     <td class="text-muted" >{{ car.get_body_type_display }}</td>
                     <td class="text-muted" >{{ car.get_drive_display }}</td> 
                     <td class="text-muted" ><a href="tel:+{{ car.owner.mobile }}">+ {{ car.owner.mobile }}</a> </td>
-                       
+                    {% if "https" in car.location %}
+                        <td class="text-muted">
+                            <a href="{{ car.location }}" target="_blank">
+                                <span>Местонахождение</span>
+                            </a>
+                        </td>
+                    {% else %}
+                        <td class="text-muted">{{ car.location }}</td>
+                    {% endif %}
                   </tr>
                 </tbody>
               </table>

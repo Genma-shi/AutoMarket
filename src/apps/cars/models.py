@@ -42,6 +42,8 @@ class Car(models.Model):
     ruletype = models.CharField("Тип руля", max_length=5, choices=RuleType.choices, default=RuleType.LEFT)
     color = models.CharField("цвет автомобиля", max_length=15, choices=Color.choices)
 
+    location = models.URLField("Адрес" ,max_length=200 , null=True , blank=True)
+
     condition = models.CharField("состояние", max_length=21, choices=ConditionType.choices)
     customs_cleared = models.CharField("расстаможен", max_length=25, choices=Customs_cleared.choices)
     vin_code = models.CharField("наличие вин кода",max_length=5,choices=VINcode.choices, default= False ,blank=True,)

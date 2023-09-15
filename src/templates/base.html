@@ -255,47 +255,7 @@
     <div class="content">   -->
       <ul>
           {% block content %}
-          {% load crispy_forms_tags %}
-    <form method="get">
-      <div class="row">
-        <div class="col-md-2">
-          <div class="form-group">
-            {{filter.form.make|as_crispy_field}}
-          </div>
-        </div>
-        <div class="col-md-2">
-          <div class="form-group">
-            {{filter.form.model|as_crispy_field}}
-          </div>
-        </div>
-        <div class="col-md-2">
-          <div class="form-group">
-            {{filter.form.price_min|as_crispy_field}}
-          </div>
-        </div>
-        <div class="col-md-2">
-          <div class="form-group">
-            {{filter.form.price_max|as_crispy_field}}
-          </div>
-        </div>
-        <div class="col-md-2">
-          <div class="form-group">
-            {{filter.form.year_min|as_crispy_field}}
-          </div>
-        </div>
-        <div class="col-md-2">
-          <div class="form-group">
-            {{filter.form.year_max|as_crispy_field}}
-          </div>
-        </div>
-      </div>
-      
-      <button class="btn btn-primary">
-        <span class="simbit-icon">Фильтровать</span>
-        
-      </button>
-      
-    </form>
+
           {% endblock %}
         </ul>
     <!-- </div>

@@ -43,8 +43,9 @@ class CarForm(forms.ModelForm):
                         Column('currency', css_class='col-md-6 my-field-class'),  
                     ),
                     Row(
-                        Column('mileage' , css_class='col-md-6 my-field-class' ) ,
-                        Column('year' , css_class='col-md-6 my-field-class')
+                        Column('mileage' , css_class='col-md-4 my-field-class' ) ,
+                        Column('year' , css_class='col-md-4 my-field-class'),
+                        Column('location' ,css_class='col-md-4 my-field-class' )
                     ),
                     Row(
                     Column('description', css_class='col-md-6 my-field-class'),
@@ -121,6 +122,7 @@ class CarForm(forms.ModelForm):
     customs_cleared = forms.ChoiceField(choices=Customs_cleared.choices, label='Расстаможен')
     vin_code = forms.ChoiceField(choices=VINcode.choices, label='Наличие VIN кода')
 
+    
 
     special_notes = forms.ModelMultipleChoiceField(
         queryset=Special_notes.objects.all(),
@@ -134,11 +136,10 @@ class CarForm(forms.ModelForm):
     class Meta:
         model = Car
         
-        fields = ['mark', 'model', 'year', 'mileage' ,'description' , 'body_type', 'ruletype', 
-                'drive', 'gearbox', 'engine',
-                'engine_capacity', 'color', 'condition', 'customs_cleared', 
-                'vin_code' , 'currency' , 'price' , 'special_notes' , 'photos' , 'additional_note' ,
-        ]
+        fields = ['mark', 'model', 'year', 'mileage', 'description', 'body_type', 'ruletype', 
+              'drive', 'gearbox', 'engine', 'engine_capacity', 'color', 'condition', 'customs_cleared', 
+              'vin_code', 'currency', 'price', 'special_notes', 'photos', 'additional_note', 'location'
+              ]
 
 class CarPhotoForm(forms.ModelForm):             
     class Meta:
