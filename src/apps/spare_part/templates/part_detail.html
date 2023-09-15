@@ -2,37 +2,33 @@
 {% load static %}
 
 {% block content %}
-<div class="page-wrapper">
-    {% if part.photos.first %}
-    <div class="page-body">
-      <div class="container-xl">
+<div class="page-body">
+  <div class="container-xl">
+    <div class="row g-2 g-md-3">
+      <div class="col-lg-6">
         <div class="row g-2 g-md-3">
-          <div class="col-lg-6">
-            <div class="row g-2 g-md-3">
-              <div class="col-6">
-                <div class="row g-2 g-md-3">
-                  {% for photo in part %}
-                  <div class="col-6">
-                    <a data-fslightbox="gallery" href="{{ photo.image.url }}">
-                      
-                      <div class="img-responsive img-responsive-1x1 rounded-3 border" style="background-image: url('{{ photo.image.url }}')"></div>
-                    </a>
-                  </div>
-                  {% endfor %} 
-                </div>
-              </div>
-            </div>
+          {% for photo in part_photos %}
+          <div class="col-6 col-md-3">
+            <a data-fslightbox="gallery" href="{{ photo.image.url }}">
+              <div class="img-responsive img-responsive-1x1 rounded-3 border" style="background-image: url('{{ photo.image.url }}')"></div>
+            </a>
           </div>
+          {% if forloop.counter|divisibleby:4 %} 
+            <div class="w-100 d-md-none"></div> 
+          {% endif %}
+          {% endfor %} 
         </div>
       </div>
     </div>
-    {% endif %}
+  </div>
+</div>
+
     
     <!-- Page body -->
     <div class="page-body">
       <div class="container-xl">
         <div class="row row-cards">
-          <div class="col-10">
+          <div class="col-13">
             <div class="card">
               <div class="table-responsive">
                 <table class="table table-vcenter card-table table-striped">
@@ -59,7 +55,15 @@
                       <td class="text">{{ part.price }}</td>
                       <td class="text-muted">{{ part.vendor_code }}</td>
                       <td class="text-muted">{{ part.get_condition_display }}</td>
-                      <td class="text-muted">{{ part.location }}</td>
+                      {% if "2gis" in part.location %}
+                          <td class="text-muted">
+                              <a href="{{ part.location }}" target="_blank">
+                                  <span>Местонахождение</span>
+                              </a>
+                          </td>
+                          {% else %}
+                          <td class="text-muted">{{ part.location }}</td>
+                       {% endif %}
                       <td class="text-muted">{{ part.is_available }}</td>
                       <td class="text-muted">{{ part.views_count }}</td>
                       <td class="text-muted">{{ part.seller_contact }}</td>
@@ -70,6 +74,7 @@
               </div>
             </div>
           </div>
+          
         </div>
       </div>
     </div>

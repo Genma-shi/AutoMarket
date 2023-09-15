@@ -1,0 +1,57 @@
+{% extends 'base.html' %} 
+{% load static %}
+{% block content %} 
+
+{% load crispy_forms_tags %}
+<div class="page-wrapper">
+    <div class="page-body">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% crispy form %}
+            <!-- <input type="file" name="photos" accept="image/*" multiple> -->
+            
+            
+        </form>
+    </div>        
+</div>
+{% endblock %}
+
+
+{% block js %}
+    <script>
+        let make = document.getElementById("id_mark");
+        let model = document.getElementById("id_model");
+
+        make.addEventListener('change', function () {
+        let make_id = this.value;
+        
+        // Создайте объект FormData для отправки данных на сервер
+
+        // Отправьте POST-запрос на сервер с использованием fetch
+        fetch('/cars/get_make_models/'+make_id+'/', {
+            method: 'GET',
+        })
+        .then(response => response.json())
+        .then(data => {
+
+            // Обновите второй select с полученными данными
+            model.innerHTML = '';
+            data.items.forEach(function(item) {
+                var id = item[0];
+                var text = item[1];
+
+                var option = document.createElement('option');
+                option.value = id;
+                option.text = text;
+
+                model.appendChild(option);
+            });
+        })
+        .catch(error => console.error('Ошибка при выполнении AJAX-запроса:', error));
+    });
+
+
+    </script>
+
+{% endblock %}
+

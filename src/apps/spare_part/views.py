@@ -5,18 +5,24 @@ from django.shortcuts import render, get_object_or_404
 from django.shortcuts import render , redirect  
 from .models import CarPart
 from django.core.paginator import Paginator
+from .filter import CarPartFilter
 
 class CarpartListView(ListView):
     paginate_by = 5
     model = CarPart
+    template_name = 'car_part.html'
 
-    def show_all_car_parts(request):
+    def show_all_car_parts(self, request):
         all_car_parts = CarPart.objects.all()
-        paginator = Paginator(all_car_parts, 1)
+        paginator = Paginator(all_car_parts, self.paginate_by)
 
         page_number = request.GET.get("page")
         page_obj = paginator.get_page(page_number)
-        return render(request, 'car_part.html', {'page': page_obj})
+        return page_obj
+
+    def get(self, request, *args, **kwargs):
+        page_obj = self.show_all_car_parts(request)
+        return render(request, self.template_name, {'page': page_obj})
 
 def add_car_part(request):
     if request.method == 'POST':
@@ -40,4 +46,19 @@ def add_car_part(request):
 def carpart_detail_view(request, pk):
     carpart = get_object_or_404(CarPart, pk=pk)
 
-    return render(request, 'part_detail.html', {'part': carpart})
+    part_photos = carpart.part_photos.all()  # Если у вас используется related_name='part_photos' в ForeignKey
+
+    return render(request, 'part_detail.html', {'part': carpart, 'part_photos': part_photos})
+
+
+def part_filter(request):
+    filter = CarPartFilter(request.GET, queryset=CarPart.objects.all())
+    
+    if filter.is_valid():
+        parts = filter.qs
+    else:
+        parts = CarPart.objects.all()  
+        
+    return render(request, 'part_filter.html', {'filter': filter, 'parts': parts})
+
+

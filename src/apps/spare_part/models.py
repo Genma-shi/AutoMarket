@@ -23,7 +23,7 @@ class CarPart(models.Model):
     price = models.DecimalField('цена',max_digits=10, decimal_places=2)  # Цена запчасти
     vendor_code = models.CharField('сериный номер',max_length=20 , null=True)                # артикуль 
     condition = models.CharField("состояние", max_length=10, choices=Condition.choices)      # Состояние запчасти (новая, б/у и т.д.)
-    location = models.CharField(max_length=100)      # Местонахождение запчасти (например, склад, магазин)
+    location = models.URLField("Адрес" ,max_length=200)      # Местонахождение запчасти (например, склад, магазин)
     is_available = models.BooleanField('в наличий' , default=True) # Флаг доступности запчасти
 
     views_count = models.PositiveIntegerField("Количество просмотров", default=0  )

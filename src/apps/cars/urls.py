@@ -16,7 +16,7 @@ urlpatterns = [
     path('favorites_list/' , views.favorites_list , name='favorites_list'),
 
     path('cars/<int:car_id>/', views.detail_page, name='detail_page'),
-    path('profile/<int:user_id>/', views.profile_view, name='profile'),
+    
 
     path('update_car/<int:car_id>/', views.update_car, name='update_car'),
 
@@ -28,5 +28,7 @@ urlpatterns = [
     path('favorites_list/add/<int:pk>' , views.add_to_favorites_list , name = 'add_to_favorites'),
     path('favorites_list/remove/<int:pk>' , views.remove_to_favorites_list , name = 'remove_to_favorites') ,
 
+
+    path("get_make_models/<int:pk>/", views.get_car_make_models ),
 
 ]
