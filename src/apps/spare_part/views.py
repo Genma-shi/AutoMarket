@@ -2,13 +2,16 @@ from .forms import CarPartForm, CarPartPhotoForm , CarPartImage
 from django.views.generic import ListView
 from django.shortcuts import render, get_object_or_404
 
+
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render , redirect  
+
 from .models import CarPart
 from django.core.paginator import Paginator
 from .filter import CarPartFilter
 
 class CarpartListView(ListView):
-    paginate_by = 5
+    paginate_by = 9
     model = CarPart
     template_name = 'car_part.html'
 
@@ -23,7 +26,7 @@ class CarpartListView(ListView):
     def get(self, request, *args, **kwargs):
         page_obj = self.show_all_car_parts(request)
         return render(request, self.template_name, {'page': page_obj})
-
+@login_required
 def add_car_part(request):
     if request.method == 'POST':
         car_part_form = CarPartForm(request.POST, request.FILES)
@@ -42,7 +45,7 @@ def add_car_part(request):
 
     return render(request, 'add_car_part.html', {'car_part_form': car_part_form})
 
-
+@login_required
 def carpart_detail_view(request, pk):
     carpart = get_object_or_404(CarPart, pk=pk)
     carpart.views_count += 1 
@@ -51,7 +54,7 @@ def carpart_detail_view(request, pk):
 
     return render(request, 'part_detail.html', {'part': carpart, 'part_photos': part_photos})
 
-
+    
 def part_filter(request):
     filter = CarPartFilter(request.GET, queryset=CarPart.objects.all())
     

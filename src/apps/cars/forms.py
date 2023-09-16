@@ -121,7 +121,7 @@ class CarForm(forms.ModelForm):
     condition = forms.ChoiceField(choices=ConditionType.choices, label='Состояние')
     customs_cleared = forms.ChoiceField(choices=Customs_cleared.choices, label='Расстаможен')
     vin_code = forms.ChoiceField(choices=VINcode.choices, label='Наличие VIN кода')
-
+    location = forms.CharField(required=False, max_length=300 , label="Адрес")
     
 
     special_notes = forms.ModelMultipleChoiceField(

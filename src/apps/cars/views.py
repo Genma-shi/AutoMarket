@@ -12,7 +12,7 @@ from django.shortcuts import render, get_object_or_404
 
 from django.http.response import HttpResponse
 # Create your views here.
-@login_required
+
 class CarListView(ListView):
     model = Car
     template_name = 'car_list.html'  # Шаблон для отображения списка элементов
@@ -54,13 +54,13 @@ def add_car(request):
         photo_form = CarPhotoForm()
     return render(request, 'add_car.html',  {'form': form})
 
+@login_required
 def delete_car(request, car_id):
     car = get_object_or_404(Car, pk=car_id)
     car.delete()
     return redirect('profile', user_id=request.user.id) 
 
-
-
+@login_required
 def favorites_list(request):
     user = request.user
     favorites = user.favorites_list.all()
@@ -68,7 +68,7 @@ def favorites_list(request):
     return render(request, 'favorites_list.html', context)
 
 
-
+@login_required
 def detail_page(request, car_id):
     car = get_object_or_404(Car, id=car_id)
     print(car.views_count)
@@ -85,10 +85,10 @@ def detail_page(request, car_id):
 
 
 
-
+@login_required
 def add_to_favorites_list(request , pk):
     user = request.user
-    car = get_object_or_404(Car , id = pk)
+    car = get_object_or_404(Car , id=pk)
     if car in user.favorites_list.all() :
         return HttpResponse("Fail")
     else:
@@ -96,9 +96,9 @@ def add_to_favorites_list(request , pk):
     return redirect ("cars")
 
 @login_required
-def remove_to_favorites_list(request , pk):
+def remove_to_favorites_list(request,pk):
     user = request.user
-    car = get_object_or_404(Car , id = pk)
+    car = get_object_or_404(Car , id=pk)
     if car in user.favorites_list.all() :
         user.favorites_list.remove(car)
         
@@ -120,7 +120,7 @@ def car_filter(request):
         cars = Car.objects.all()  # Если форма не валидна, покажите все машины
         
     return render(request, 'car_filter.html', {'filter': filter, 'cars': cars})
-
+@login_required
 def filtered_cars(request, pk=None):
     # Получите объект машины по ее Primary Key (pk)
     if pk:
@@ -139,7 +139,7 @@ def filtered_cars(request, pk=None):
 
     return render(request, 'car_filter.html', {'filter': car, 'cars': cars})
 
-
+@login_required
 def update_car(request, car_id):
     car_instance = get_object_or_404(Car, id=car_id)
 
@@ -158,7 +158,7 @@ def update_car(request, car_id):
 from django.http import JsonResponse
 
 
-
+@login_required
 def get_car_make_models(request, pk): 
     make = CarMake.objects.get(id=pk)
     models = CarModel.objects.filter(cars=make).values_list("id", "name")

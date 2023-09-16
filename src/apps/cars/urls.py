@@ -18,7 +18,6 @@ urlpatterns = [
     path('favorites_list/' , views.favorites_list , name='favorites_list'),
 
     path('cars/<int:car_id>/', views.detail_page, name='detail_page'),
-    
 
     path('update_car/<int:car_id>/', views.update_car, name='update_car'),
 
